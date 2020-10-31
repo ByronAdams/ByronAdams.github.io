@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Palatino:300,300italic,400,400italic,700,700italic|Libre+Baskerville:300,300italic,400,400italic,700,700italic|Roboto+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"8.0.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+
+  <meta name="description" content="Abstract Understanding cell heterogeneity is the prerequisite for cell development and disease-related studies. Traditional strategies like marker-dependent cell sorting or single-cell RNA sequencing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Benchmarking Several Regression Models on Dissecting Cell Type Compositions in Brain Tissues">
+<meta property="og:url" content="http://example.com/2020/07/08/dcBenchmark/index.html">
+<meta property="og:site_name" content="Ao Huang&#39;s Blog">
+<meta property="og:description" content="Abstract Understanding cell heterogeneity is the prerequisite for cell development and disease-related studies. Traditional strategies like marker-dependent cell sorting or single-cell RNA sequencing">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-08T14:39:04.000Z">
+<meta property="article:modified_time" content="2020-10-31T05:54:43.585Z">
+<meta property="article:author" content="Ao Huang">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2020/07/08/dcBenchmark/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Benchmarking Several Regression Models on Dissecting Cell Type Compositions in Brain Tissues | Ao Huang's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Ao Huang's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Hello,world.</p>
+      <img class="custom-logo-image" src="/images/imageTest.jpeg" alt="Ao Huang's Blog">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#classical-strategies-in-studying-cell-heterogeneity"><span class="nav-number">2.1.</span> <span class="nav-text">Classical Strategies in Studying Cell Heterogeneity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#rna-seq-and-scrna-seq"><span class="nav-number">2.2.</span> <span class="nav-text">RNA-seq and scRNA-seq</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#deconvolution-and-its-application-in-brain-tissues"><span class="nav-number">2.3.</span> <span class="nav-text">Deconvolution and its application in brain tissues</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#methods"><span class="nav-number">3.</span> <span class="nav-text">Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#rationale-for-deconvolution-in-estimating-cell-fractions"><span class="nav-number">3.1.</span> <span class="nav-text">Rationale for deconvolution in estimating cell fractions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#regression-based-deconvolution-in-this-study"><span class="nav-number">3.2.</span> <span class="nav-text">Regression-based deconvolution in this study</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#data-summary-and-exploratory-analysis"><span class="nav-number">3.3.</span> <span class="nav-text">Data summary and exploratory analysis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#benchmark-strategy"><span class="nav-number">3.4.</span> <span class="nav-text">Benchmark strategy</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#results"><span class="nav-number">4.</span> <span class="nav-text">Results</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#svr-outperforms-all-three-least-squares-based-regression-methods-in-stability"><span class="nav-number">4.1.</span> <span class="nav-text">SVR outperforms all three least squares-based regression methods in stability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#svr-has-better-performances-in-enumerating-cell-subsets-with-closer-kinship"><span class="nav-number">4.2.</span> <span class="nav-text">SVR has better performances in enumerating cell subsets with closer kinship</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#certain-cell-types-exhibit-systematic-bias-deconvolved-with-svr"><span class="nav-number">4.3.</span> <span class="nav-text">Certain cell types exhibit systematic bias deconvolved with SVR</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#discussion"><span class="nav-number">5.</span> <span class="nav-text">Discussion</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Ao Huang</p>
+  <div class="site-description" itemprop="description">Father of Luo</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/08/dcBenchmark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Ao Huang">
+      <meta itemprop="description" content="Father of Luo">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ao Huang's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Benchmarking Several Regression Models on Dissecting Cell Type Compositions in Brain Tissues
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-07-08 22:39:04" itemprop="dateCreated datePublished" datetime="2020-07-08T22:39:04+08:00">2020-07-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-10-31 13:54:43" itemprop="dateModified" datetime="2020-10-31T13:54:43+08:00">2020-10-31</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Research-Projects/" itemprop="url" rel="index"><span itemprop="name">Research Projects</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="abstract">Abstract</h3>
+<p>Understanding cell heterogeneity is the prerequisite for cell development and disease-related studies. Traditional strategies like marker-dependent cell sorting or single-cell RNA sequencing (scRNA-seq) have provided many insights in dissecting cell type-specific compositions and gene expression profiles in tissues, but there have been many drawbacks associating with the lack of precision and capability in cell isolations which limit their applications. Deconvolution emerges as a powerful tool in enumerating cell subsets and their specific gene expression patterns directly from bulk tissue transcriptomes by means of multivariate models without physical cell isolations. <strong><a id="more"></a></strong> Relevant pipelines and algorithms have been widely developed and applied in restoring cell type-specific transcriptomes in immune-infiltrated tissues, but there have been seldom reports on using deconvolution on brain tissues which are more heterogenous and complex. In this study, we test four regression methods, optimal least squares (OLS), LASSO, ridge and support vector regression (SVR) as deconvolution methods on raw scRNA-seq data of brain-specific cells. Through our designed benchmark strategy, we find that least squares-based regression models have better performance when the simulated bulk transcriptomes are cleaner and neater. When introduced with outliers, however, SVR exhibits more stable performance among the four methods in precisely predicting the fractions for each cell type. We then benchmark the influence of cell type phylogenetic kinship on SVR's performance. To our surprise, SVR has better performance in enumerating cell types with closer kinship. We further target several cell types namely microglia, astrocytes, oligodendrocytes and their progenitors (OPC), excitatory neurons (subset 1, 2, 5b and 8) that have systematic bias through deconvolution by SVR. What contributes to these biases is still under investigations. In all, this study is an early endeavor to benchmark several regression methods' performance on brain cells and to explore brain cell-specific transcriptomes data structures, which indicates that a deconvolution method specific for cell enumeration in brain tissues should be constructed for higher accuracy.</p>
+<h3 id="introduction">Introduction</h3>
+<h4 id="classical-strategies-in-studying-cell-heterogeneity">Classical Strategies in Studying Cell Heterogeneity</h4>
+<p>Cell heterogeneity has been the principle research focus in basic biology ever since the dawn of molecular age. The decode of the heterogenous cell subsets morphologically, functionally and genetically has shed light on answering the most fundamental questions in cell differentiation, development and pathological process. Classical approaches in sorting and typing cells are through flow-cytometry and immunohistochemistry (IHC). Both of these methods depend on fluoresces-distinctive antibodies labeling, which can be visualized and analyzed for studying cell compositions and distribution. For these methods, however, priori knowledge on pre-selected protein or nucleic acid markers are needed to design cell type-specific markers, which are not suitable for exploratory analysis. Flow-cytometry and IHC study cell heterogeneity at a more macroscopic view and neglect the identification and quantification of cell subsets with more subtle differences.</p>
+<h4 id="rna-seq-and-scrna-seq">RNA-seq and scRNA-seq</h4>
+<p>The emergence of sequencing technology on transcriptomes brings examinations on cell heterogeneity to gene-expression-specific resolution. Transcriptomes measure messenger RNA (mRNA) abundance in a bulk tissue or even a single cell. mRNA are transcribed from DNA, and therefore by knowing mRNA compositions, cellular functions and stage of development can be deduced. All cells within an individual organism shares totally identical genomes, but their gene expression profiles (GEPs), partly and majorly represented by mRNA abundance, are very distinct temporally and spatially, which contribute to cell heterogeneity.</p>
+<p>RNA sequencing (RNA-seq) technology is a prevalent strategy in quantifying mRNA profiles within biological tissues as GEPs. RNA-seq are even ameliorated to be done at single-cell level that unveil single cell-specific transcriptomes, abbreviated as single-cell RNA sequencing (scRNA-seq). Upon obtaining the scRNA-seq data from a bulk of tissue, each and every cell type can be identified based on their unique GEPs fingerprints. However, as powerful as scRNA-seq is, it has certain dilemmas limiting its applications:</p>
+<ul>
+<li>Large tissue samples and fixed clinical specimens cannot form single-cell suspensions, which is a prior step for scRNA-seq;</li>
+<li>Transcriptomes data might be damaged when forming single-cell suspensions;</li>
+<li>scRNA-seq is relatively expensive.</li>
+</ul>
+<p>In these scenarios, we can only obtain RNA-seq data which quantifies the bulk transcriptomes of tissues. How to obtain from bulk RNA-seq data the cell type-specific GEPs and compositions remains a challenging and unsettled question.</p>
+<h4 id="deconvolution-and-its-application-in-brain-tissues">Deconvolution and its application in brain tissues</h4>
+<p>In recent years, computational techniques and mathematical models have been developed assisting in enumerating cell types and compositions from a bulk tissue, deconvolution among them. Deconvolution has many interpretations in different disciplines and targeted questions, but for cell heterogeneity studies, deconvolution is explained as being capable of deducing cell type-specific GEPs from heterogenous tissues without physical cell isolation . Deconvolution methods have been widely developed in dissecting tumor-infiltrating immune cells and achieve excellent performances .</p>
+<p>However, there have been seldom reports on using deconvolution methods in dissecting cell subsets in brain tissues. Frankly speaking, brain tissues is in more desperate needs for deconvolution in studying hetergeneity, because neuron cells have tremendous complex and baroque 3-d structures which are hard to disaggregate for scRNA-seq  . Additionally, brain-specific cell compositions have even higher heterogeneity which requires more robust deconvolution method in dealing with noise and subtle GEPs differences.</p>
+<p>There are two major goals in deconvolution: (1) enumerate the types of cells in bulk tissues and their corresponding proportions. (2) compute cell type-specific GEPs. In this study, we mainly focus on the first goal, because upon gathering the cell fractions information from a bulk tissue, cell-specific GEPs can be postulated more easily. We have tested four regression models, optimal least squares (OLS), least absolute shrinkage and selection operator (LASSO), ridge and support vector regression (SVR) as deconvolution strategies in brain single-cell transcriptomes data. By testing regression methods on pseudo bulk RNA-seq data generated from scRNA-seq data, we share insights in the performances and defects for current multivariate methods in brain cell-specific deconvolution as a preceded exploratory analysis for a more suitable deconvolution method developed for brain cell-specific analysis.</p>
+<h3 id="methods">Methods</h3>
+<h4 id="rationale-for-deconvolution-in-estimating-cell-fractions">Rationale for deconvolution in estimating cell fractions</h4>
+<p>The basic assumption of applying deconvolution in cell subsets enumeration is that the expression level for a specific gene in a bulk tissue is the <em>linear combinations</em> of that gene expressed in each cell type within the studied bulk tissue (Figure 1a). It takes the form of linear system of equations that associates bulk GEPs, cell type-specific GEPs and fractions for each cell types: <span class="math display">\[
+\mathbf{Y}_{N\times1} = \mathbf{X}_{N\times C} \cdot \pmb{\beta}_{C\times1} \tag{1}
+\]</span> In equation 1, <span class="math inline">\(\mathbf{Y}\)</span> is the bulk matrix representing the expression levels of <span class="math inline">\(N\)</span> genes in a bulk tissue, <span class="math inline">\(\mathbf{X}\)</span> is the reference matrix with cell type-specific GEPs of <span class="math inline">\(C\)</span> types of cells and <span class="math inline">\(\pmb{\beta}\)</span> is the fraction matrix containing <span class="math inline">\(C\)</span> proportions corresponding to each cell types. <span class="math inline">\(\mathbf{Y}\)</span> can be collected from RNA-seq data for a bulk tissue, <span class="math inline">\(\mathbf{X}\)</span> can be roughly assembled from scRNA-seq data of each cell type (do not necessarily have to come from the same tissue). Then, the simple goal of deconvolution is to estimates the <span class="math inline">\(\pmb{\beta}\)</span> coefficients for a systems of linear equations, which represent cell fractions.</p>
+<p>Notably, we often need to generate a signature matrix <span class="math inline">\(\mathbf{S}\)</span> containing a subsets of marker genes <span class="math inline">\(N&#39;\)</span> from the reference matrix (Figure 1a). Because not all genes' expression levels can serve as robust training sets in distinguishing different cell types. We set two thresholds in filtering the marker genes. A gene is considered as a marker gene if:</p>
+<ul>
+<li>Its expression level in at least one cell type is 5 times higher than the median expression level of all cell types;</li>
+<li>The fold change between expression level in one cell type and mean expression level of all cell types converted to logarithm of base two is greater than 3, that is</li>
+</ul>
+<p><span class="math display">\[
+\textrm{log}_2(\mathrm{FC}) = \textrm{log}_2(\;\frac{cell\;expr}{mean\; expr}\;) &gt; 3.
+\]</span></p>
+<p>Figure 1b presents an example in marker genes selection of one of the trails in the coming benchmarking. The aforesaid thresholds filter 2421 marker genes from the original 17176 genes, which give more distinct GEPs features for each cell types.</p>
+<h4 id="regression-based-deconvolution-in-this-study">Regression-based deconvolution in this study</h4>
+<p><strong>Simple linear regression.</strong> Since deconvolution in cell subsets enumeration is to fit a matrix equation, the first thought is to find a set of <span class="math inline">\(\beta\)</span> that minimize the error sums of squares, that is the simple regression by OLS. Our trails are run with the ``lm" function in R. Note that the coefficients estimated by OLS is forced to be non-negative and normalized to sum to one, because <span class="math inline">\(\pmb{\beta}\)</span> means cell fractions in biological context.</p>
+<p><strong>Penalized regression (LASSO and ridge).</strong> In real case analysis, however, bulk transcriptomes are not necessarily the linear combinations of cell type-specific GEPs, because for an totally unexplored bulk tissue, we can only estimate roughly of the types of cells in this tissue through means of flow-cytometry or IHC. Besides, scRNA-seq has its own bias that does not always provide accurate information on cell-type transcriptomes. These indicates that there would be quite some noise and disturbance in data structures that undermine deconvolution performances. Henceforth, we test LASSO and ridge regression with penalty in compromise of the disturbance, whose cost functions are depicted as <span class="math display">\[
+\begin{array}{rcl}
+        \phi(\pmb{\beta}) &amp;=&amp; \Vert \pmb{\beta}^{\tau}\mathbf{X} - \mathbf{Y} \Vert^2 + \lambda p(\pmb{\beta})  \\ 
+    \mathrm{where}, \; p(\pmb{\beta}) &amp;=&amp; 
+        \left \{
+        \begin{array}{ll}
+            \Vert \pmb{\beta} \Vert &amp; \mathrm{\textit{LASSO,}}  \\
+            \Vert \pmb{\beta} \Vert^2 &amp; \mathrm{\textit{Ridge.}}
+        \end{array}
+        \right. 
+    \end{array}
+\]</span> The algorithms is run using a R package <font face="Teletype">glmnet</font>. Note that the tuning parameter <span class="math inline">\(\lambda\)</span> is selected by ten-fold cross validation that minimize the error of sums of squares. Estimated coefficients are also forced to be non-negative and sum to one.</p>
+<p><strong>Support vector regression (SVR).</strong> We extent support vector machine in linear form to the regression problem. Unlike the least squares-based regression methods, SVR inherited the properties of SVM which minimize only residuals that surpass a certain constant distance <span class="math inline">\(\epsilon\)</span>, whose cost function is <span class="math display">\[
+\begin{array}{rcl}
+        \phi(\pmb{\beta}) &amp;=&amp; V( \pmb{\beta}^{\tau}\mathbf{X} - \mathbf{Y} ) + \frac{\lambda}{2} \Vert \pmb{\beta} \Vert^2  \\ 
+    \mathrm{where}, \; V_{\epsilon}(r) &amp;=&amp; 
+        \left \{
+        \begin{array}{ll}
+            0 &amp; \mathrm{if} \vert r \vert &lt; \epsilon, \\
+            \vert r \vert - \epsilon &amp; \mathrm{otherwise.}
+        \end{array}
+        \right. 
+    \end{array} \tag{2}
+\]</span> From equation 2, SVR co-considers the selective error reduction and penalty function, which would minimize overfitting. In this study, we refer to a developed deconvolution package CIBERSORTx which uses <span class="math inline">\(\nu\)</span>-support vector regression where the optimal <span class="math inline">\(\nu\)</span> have been selected for deconvolution in immune cells . The support vector regression process is run with the ``svm" function in the R package <font face="Teletype">e1071</font> in CIBERSORTx. Since CIBERSORTx is designed as an intact pipeline for deconvolution including data normalization and building signature matrix etc., we conduct SVR directly through CIBERSORTx.</p>
+<h4 id="data-summary-and-exploratory-analysis">Data summary and exploratory analysis</h4>
+<p>We test the above-mentioned four regression methods on brain cell-specific data, a 17176 (genes) by 27412 (cells) large matrix collected from <em>PsychENCODE</em> (<a target="_blank" rel="noopener" href="http://resource.psychencode.org/Datasets/Derived/SC_Decomp/DER-22_Single_cell_expression_raw_UMI.tsv">data availability</a>). In the dataset, each column represents a scRNA-seq data for a single cell and each row represents a gene expression values between cells. Each column of cell is a quantitative variable taken UMI (unique molecular identifier) as unit. The 27412 single cell GEPs was organized into 25 cell types and subsets by previous researches  including astrocytes (Astro), endothelial cells (Endo), microglia cells (Microglia), Purkinje neurons (Per), oligodendrocytes (Oligo) and their progenitor cells (OPC), and excitatory (Ex) and inhibitory (In) neurons and their subsets (Figure 1c), which covers the major cell types in human brain.</p>
+<p>We conduct t-distributed stochastic neighbor embedding (t-SNE) to reduce dimensions from 17176 to 2 to visualize cell type clustering based on their gene expression profiles (Figure 1d). t-SNE is a non-linear dimensionality reduction strategy that project high-dimensional data to low dimensional space while preserving high-dimensional clustering features. It defines point-to-point similarity by putting their distance in a t-distributed density function and reorganizes points based on their similarity scores in lower dimensions. t-SNE outperforms principal component analysis in preserving aggregation characteristics , the latter of which often creates overlaps between different clusters in spatial linear transformation to reduce dimensions. Figure 1d presents cell aggregates that shares similar GEPs. Generally, different cell types have been aggregated to different 2-d positions. But it is worth remarking that even for the same labeled cell types in the dataset like Ex1, Ex5b, OPC and Oligo, points are clustered to different segments, indicating that there are batch effects or temporal influences that result in distinct differences in scRNA-seq output, but these information have not been shed in the original dataset. Additionally, a confounding mixture is formed around the Per and Microglia labels. Notice that the scRNA-seq replicates for and Per cell type is very small (Figure 1c, 45 scRNA-seq samples), these data might not fully represents the GEPs of Per. We remove Per and preserve only the other 24 cell types in the following analysis.</p>
+<p>For each cell type, we take the mean of their single cell expression profiles as the GEPs of that particular cell types. With the obtained cell type-specific GEPs as variables, we construct an agglomerative cluster tree using ward's minimum variance (ward.D2) linkage method, which manifests the kinship between cell types (Figure 1e). Cell types are classified into seven groups based on their distance of relations.</p>
+<h4 id="benchmark-strategy">Benchmark strategy</h4>
+<p>We set the following benchmark strategy to compare different regression models on enumerating brain cells bulk transcriptomes (Figure 2a). We first decide the number of cell types to be deconvolved (the value of <span class="math inline">\(C\)</span> in equation 1 and <span class="math inline">\(C\)</span> in Figure 2a) and the number of scRNA-seq samples per cell type <span class="math inline">\(R\)</span> to form the reference matrix <span class="math inline">\(\mathbf{M}\)</span>. In <span class="math inline">\(\mathbf{M}\)</span>, <span class="math inline">\(R\)</span> scRNA-seq samples are summed and divide by <span class="math inline">\(R\)</span> (mean scRNA-seq GEPs) to represent cell type-specific GEPs. Signature matrix <span class="math inline">\(\mathbf{S}\)</span> is filtered as mentioned above.</p>
+<p>Once the value of <span class="math inline">\(C\)</span> is determined, we set different sampling methods to select cell types with designed gradient of kinship closeness. Referencing Figure 1e, cell types are categorized into seven groups. Sampling method works like this: for method 1, <span class="math inline">\(C\)</span> types of cell are randomly selected from the 24 cell types; for method 2, a cell type is randomly selected from the joint group of group 1 and group 2 and a second cell type is randomly selected from group 3, and another one from group 4, and another one from group 5, and another one from group 6 and group 7; the following methods also (Figure 2a Sampling Methods). These strategies are more suitable for sampling for five cell types, which is exactly the value we assign to <span class="math inline">\(C\)</span> value in the following analysis.</p>
+<p>Since we have only the single-cell transcriptomes data of brain cells, we generate pseudo bulk transcriptomes, denoted as <span class="math inline">\(\mathbf{B}\)</span> by randomly assigning cell fractions <span class="math inline">\(F\)</span> to pre-chosen cell type-specific GEPs and sum them. To simulate analysis in real-time situation where the bulk transcriptomes contain noise that could not be fully interpreted by the reference matrix, we introduce normally distributed random error <span class="math inline">\(\epsilon \sim \mathcal{N}(0,\sigma^2)\)</span> to <span class="math inline">\(\mathbf{B}\)</span>. We even introduce outliers to randomly-selected genes in several trails to benchmark the stability between models in dealing with strong disturbance.</p>
+<p>The prepared <span class="math inline">\(\mathbf{S}\)</span> and <span class="math inline">\(\mathbf{B}\)</span> are put to training that produce a set of cell fractions predictions <span class="math inline">\(P\)</span>, and a model is considered a better model if the pearson coefficients between the <span class="math inline">\(F\)</span> and <span class="math inline">\(P\)</span> is closer to one and root-mean square error (RMSE) closer to zero. This whole process from random sampling to calculating the performance scores is repeated <span class="math inline">\(N\)</span> times for higher statistical confidence.</p>
+<h3 id="results">Results</h3>
+<h4 id="svr-outperforms-all-three-least-squares-based-regression-methods-in-stability">SVR outperforms all three least squares-based regression methods in stability</h4>
+<p>Consulting the benchmark strategy in Figure 2a, we first set <span class="math inline">\(C\)</span> to 5, <span class="math inline">\(R\)</span> to 50 <span class="math inline">\(N\)</span> to 100, and adopt method 1 in cell types sampling to benchmark the deconvolution performance of four regression models OLS, LASSO, ridge and SVR in restoring cell fractions. When introduced with the random error <span class="math inline">\(\epsilon \sim \mathcal{N}(0,30^2)\)</span> in the bulk transcriptomes, OLS has the highest average pearson coefficients and lowest RMSE among the four methods (Figure 2b upper panel). The distribution of OLS's pearson coefficents and RMSE per turn is also the most concentrated (Figure 2c right panel). It is not hard to account for such good performance OLS embodies under these set parameters, because the pseudo RNA transcriptomes are merely the linear combinations of each cell type GEPs with normally distributed error, which would be easily neutralized in large numbers of repetition experiments. The penalized regression methods exhibit second best performance in this case. The choice of the tuning parameter <span class="math inline">\(\lambda\)</span> in both LASSO and ridge through ten-fold cross validation is very small, indicating that the penalty term take little effects in compromising normally distributed noise error (Supplementary Figure a).</p>
+<p>We further introduce not only the random error but also outliers (1000 + <span class="math inline">\(\mathcal{N}(0,100^2)\)</span>) in 0.5% of randomly selected genes among the entire 17176 genes when constructing pseudo bulk transcriptomes. The SVR performed on CIBERSORTx has the optimal performances measured by average pearson coefficients and RMSE values (Figure 2b lower panel). The distribution of the pearson and RMSE values of SVR are also the most centralized and have fewer outliers (Figure 2c left panel). The median of the pearson value in OLS is higher than that of SVR, but its average pearson value is 0.07 lower than SVR, indicating that the OLS results of deconvolution is more sparsely distributed and not as stable as SVR. Besides, ridge regression outperforms LASSO and OLS in this scenario. Note that we have not been introduced penalized factor as a mean of feature selection, because each coefficient in the model have its biological meanings. Instead, we want the penalized term to neutralize distinctive deviations in the response variable. Ridge regression has realized this effect under this circumstances, its <span class="math inline">\(\lambda\)</span> being selected significantly higher than the <span class="math inline">\(\lambda\)</span> selected in LASSO (Supplementary Figure a).</p>
+<p>Meanwhile, by comparing vertically in the scatterplots, scatter pattern in SVR become slightly more sparse after being introduced the outliers, but that of the least squares-based regression methods change significantly (Figure 1b). It can be concluded that SVR is a more robust and stable deconvolution method in dealing with data with more noise and disturbance, while OLS method is more suitable for analysis towards more confident and neat dataset. But the existence of outliers is more similar to the actual cases in practicing deconvolution on heterogenous brain-specific cells, where the types of cells within a bulk tissue are unable to be fully identified.</p>
+<h4 id="svr-has-better-performances-in-enumerating-cell-subsets-with-closer-kinship">SVR has better performances in enumerating cell subsets with closer kinship</h4>
+<p>Since SVR is the most stable in brain cell-type specific deconvolution, we intend to benchmark whether SVR is susceptible to cell kinship. We separately conduct benchmarking with five different sampling methods as shown in Figure 1a, with <span class="math inline">\(C\)</span> to 5, <span class="math inline">\(R\)</span> to 50 <span class="math inline">\(N\)</span> to 100. Surprisingly, closer the kinship of the selected cell types, higher the accuracy SVR exhibits in deconvolution (Figure 3a). Method 5 merely samples from group 6 the subsets of inhibitory cells which is considered to have the closest relationship by tree clustering (Figure 1e). We set the loop numbers <span class="math inline">\(N\)</span> from 100 to 2 to increase the random effects, but prediction accuracy measured by pearson and RMSE values shows similar tendency. It is worth noticing that the output of method 2 performs the most poorly with the lowest pearson value and highest RMSE and dispersed distributions (Figure 3c), even worse than the randomly sampled trails (method 1). Besides, the pairwise scatterplots of the pearson coefficients between the five methods show similar points clustering patterns, which indicates that there are a certain set of cell types that can be precisely estimated through SVR and another set of cell types that cannot (Supplementary Figure b). We reckon that the poor performance presents in method 2 can be attributed to a list of certain cell types whose assigned fractions cannot be precisely predicted by the SVR deconvolution method.</p>
+<h4 id="certain-cell-types-exhibit-systematic-bias-deconvolved-with-svr">Certain cell types exhibit systematic bias deconvolved with SVR</h4>
+<p>To test our assumption, instead of sampling cell types, we eliminate the random effect of the times a certain cell type can be selected during loops by fixing two groups of cell types with different closeness of kinship based on the classification trees (Figure 1e). The close group is comprised of In7, In8, In1c,In4a and In6a which are phylogenetically more closely related. The distant group contains Ex1, Endo, Microglia, Ex3e and In8 which are more distant. Since different linkage methods might result in totally different classification trees, we construct four classification trees using different linkage methods and find that the close group and distant group maintains their closeness of kinship in no matter what types of trees (Supplementary Figure c). In accordance with our assumption, estimations towards cell types in the close group performs better using SVR in deconvolution (Figure 3d). Surprisingly, by color-labeling the five selected cell types in the distant group, we find that the estimations of two cell types Ex1 and Microglia systematically deviates from the ``" reference line. By removing the deviated points in Ex1 and Microglia from the scatterplot, we can calculate a trimmed average pearson coefficient which is improved from 0.6962 to 0.9092.</p>
+<p>Ex1 and Microglia are from group 2 and group 5 respectively (Figure 3e right panel), indicating that there might be systematic biases for cell types deconvolved with SVR in these groups. We color-label that previous scatterplot that are produced with sampling method 2 and 100 loops in Figure 3e, and find that Ex2 in group 1, Ex1, Ex5b and Ex8 in group 2, Astro, Oligo, Microglia, OPC in group 5 have systematic biases when analyzed with the SVR (Figure 3e). The fractions of Ex1, Ex2 and Ex5b from group 1 and group 2 tend to be overestimated, while Astro, Oligo, Microglia and OPC in group 5 tend to be underestimated. These obviously manifests that the SVR deconvolution algorithms have systematic biases towards estimating certain brain cell types fractions.</p>
+<p>Additionally, the values of <span class="math inline">\(C\)</span> and <span class="math inline">\(R\)</span>'s influence on SVR performance have also been benchmarked. The rise of <span class="math inline">\(C\)</span> from 5 to 10 cell types undermines SVR performance (Supplementary Figure d). This is due to the curse of dimensionality which makes determining hyperplane boundaries more difficult for SVR at higher dimension. Note that the value of <span class="math inline">\(R\)</span> from 50 to 180 have seldom influence on SVR's performance but from 50 to 10 presents significant drawback (Supplementary Figure e). This partly explains our choice of <span class="math inline">\(R\)</span> in benchmarking which both considers accuracy and reduce computational cost.</p>
+<h3 id="discussion">Discussion</h3>
+<p>Next generation sequencing has brought tremendous amounts of data in biological research which enables the study of cell heterogeneity through computational and mathematical approaches without actual physical cell isolations. Upon fitting a system of linear equations, deconvolution methods achieve satisfied performance in dissecting cell subsets in tumor and immunological tissues. In this study, we benchmark four regression strategies as deconvolution methods in restoring cell type-specific gene expression patterns on brain tissues where deconvolution methods are seldom applied. Note that we are not taking gene as predictors like what multivariate analysis towards GEPs normally does in deconvolution, but as training samples, because our purpose is to fit the coefficients for each cell type (variable) rather than taking them as qualitative responses.</p>
+<p>Generally speaking, deconvolution with OLS has better performance with only normally distributed error introduced, which applies to the scenario where the prior knowledge to the content of bulk tissues are more sufficient. For more complicated and heterogenous tissues in lack of the intact knowledge of cell type compositions, SVR has better performances in dealing with more intense disturbance in a dataset. This is because simple regression is very sensitive to outliers in the training data while SVR provides more sparse solution to the regression model that are more tolerant towards outliers . For the penalized regression models, ridge performs better than the LASSO. This can be attributed to the difference in the cost function (equation 2), where in LASSO the estimates can be compressed to one while in ridge they cannot. This is in accordance to previous benchmarkings that coefficients predicted by LASSO tend to have larger biases .</p>
+<p>The study of cell phylogenetic kinship on SVR deconvolution accuracy produce the most interesting results that closer the kinship of cell types, better the model performs. This is in collision with our previous understanding that more subtle the differences between GEPs, harder it is for deconvolution models to tell apart these cell types. With suspicions, we further discover that there exists systematic bias for certain cell types when applying SVR. By examining the cluster tree, we find that these bias cells are mainly located in groups with more distant kinship. But whether such bias are resulted from phylogenetic relations or the peculiar transcriptomes these bias cells have, or even the inveracity of the scRNA-seq data remains unanswered. Because from the t-SNE plot of Figure 1e, we can see that even though the selected cell types in the close group are closely related, but they have seldom overlaps in t-SNE plot, while for more distant related cell types (Figure 3e), their features after dimension reduction still mix with each another, especially for Microglia. These might be due from unexplored gene expression features among these cells or un-removed batch effects that influence the building cell type-specific GEPs from scRNA-seq. Additionally, the developed CIBERSORTx set <span class="math inline">\(\nu\)</span> to be chosen from {0.25, 0.5, 0.75} which are found to perform the best in deconvolution in immune cells . We may try different <span class="math inline">\(\nu\)</span> values in further analysis to achieve optimal performance for SVR in brain.</p>
+<p>Still, deconvolution method is a promising computational tool to study cell heterogeneity. We anticipate that the systematic biases in brain cells be refined for more accurate enumeration of cell subsets and their unique expression profiles from brain-specific transcriptomes.</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/10/28/testPic/" rel="next" title="testPic">
+                  testPic <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Ao Huang</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    const script = document.createElement('script');
+    script.src = '//cdn.jsdelivr.net/npm/mathjax@3.1.2/es5/tex-mml-chtml.js';
+    script.defer = true;
+    document.head.appendChild(script);
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.typesetClear();
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+</body>
+</html>
